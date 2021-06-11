@@ -1,73 +1,54 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        doot-front-2-1
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <p>データ:</p>
+    <p>{{ sendMessage }}</p>
+    <input v-model="message"/>
+    <button @click="sendChat">送信</button>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      message: '',
+      sendMessage: [],
+    }
+  },
+  methods: {
+    sendChat() {
+      this.sendMessage.push({user: 'me', data: this.message})
+      this.BotChat(this.message)
+      this.message = ''
+    },
+    BotChat(msg) {
+      this.sendMessage.push({user: 'other', data: msg + "!!"})
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+.split{
+  display: table;
+  width: 100%;
 }
-
-.title {
-  font-family:
-    'Quicksand',
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
+.split-item {
+  display: table-cell;
+  padding: 80px;
+  width: 50%;
 }
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+.split-left {
+  background: #000;
+  color: #fff;
+  position: relative;
 }
-
-.links {
-  padding-top: 15px;
+.split-left__inner {
+  height: 100%;
+  position: fixed;
+  width: 50%;
+}
+.split-right__inner {
+  height: 8000px;
 }
 </style>
