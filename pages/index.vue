@@ -11,10 +11,18 @@
             <span class="time">{{ item.time }}</span>
           </div>
           <div v-if="item.user == `other`" class="other messages">
-            <div class="message last">
-              {{ item.data }}
+            <div class="avatar">
+              <font-awesome-icon icon = "user-circle" class="avatar-svg"/>
             </div>
-            <span class="time">{{ item.time }}</span>
+            <div>
+              <span class="user-name">経営者Aさん</span>
+              <div class="message last">
+                {{ item.data }}
+              </div>
+              <div class="time">
+                {{ item.time }}
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -39,7 +47,8 @@ export default {
   methods: {
     sendChat() {
       if (this.message) {
-        this.sendMessage.push({user: 'me', data: this.message, time: new Date()})
+        let date = new Date()
+        this.sendMessage.push({user: 'me', data: this.message, time: date.toLocaleString()})
         this.BotChat(this.message)
         this.message = ''
       } else {
@@ -48,7 +57,8 @@ export default {
     },
     BotChat(msg) {
       setTimeout(() => {
-        this.sendMessage.push({user: 'other', data: msg + "!!", time: new Date()})
+        let date = new Date()
+        this.sendMessage.push({user: 'other', data: msg + "!!", time: date.toLocaleString()})
       }, 3000)
     }
   }
@@ -97,6 +107,20 @@ export default {
     }
     .other {
       align-items: flex-start;
+      display: flex;
+      flex-direction: row;
+      .avatar {
+        width: 40px;
+        height: 40px;
+        .avatar-svg {
+          width: 70%;
+          height: 70%;
+        }
+      }
+      .user-name {
+        font-size: 14px;
+        color: gray;
+      }
       .message {
         margin-right: 25%;
         background-color: #eee;
