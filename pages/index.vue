@@ -8,13 +8,13 @@
             <div class="message last">
               {{ item.data }}
             </div>
-            <span class="time">11:00</span>
+            <span class="time">{{ item.time }}</span>
           </div>
           <div v-if="item.user == `other`" class="other messages">
             <div class="message last">
               {{ item.data }}
             </div>
-            <span class="time">11:00</span>
+            <span class="time">{{ item.time }}</span>
           </div>
         </div>
       </div>
@@ -39,7 +39,7 @@ export default {
   methods: {
     sendChat() {
       if (this.message) {
-        this.sendMessage.push({user: 'me', data: this.message})
+        this.sendMessage.push({user: 'me', data: this.message, time: new Date()})
         this.BotChat(this.message)
         this.message = ''
       } else {
@@ -47,7 +47,9 @@ export default {
       }
     },
     BotChat(msg) {
-      this.sendMessage.push({user: 'other', data: msg + "!!"})
+      setTimeout(() => {
+        this.sendMessage.push({user: 'other', data: msg + "!!", time: new Date()})
+      }, 3000)
     }
   }
 }
