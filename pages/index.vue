@@ -1,7 +1,24 @@
 <template>
   <div class="container">
     <div class="Side">Side</div>
-    <div class="Content">Content</div>
+    <div class="Content">
+      <div class="chat">
+        <div v-for="(item, index) in sendMessage" :key="index">
+          <div v-if="item.user == `me`" class="mine messages">
+            <div class="message last">
+              {{ item.data }}
+            </div>
+            <span class="time">11:00</span>
+          </div>
+          <div v-if="item.user == `other`" class="other messages">
+            <div class="message last">
+              {{ item.data }}
+            </div>
+            <span class="time">11:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="Form">
       <div class="form-content">
         <input v-model="message" placeholder="ENTERキーで送信(上限800文字)" maxlength="800" />
@@ -21,9 +38,13 @@ export default {
   },
   methods: {
     sendChat() {
-      this.sendMessage.push({user: 'me', data: this.message})
-      this.BotChat(this.message)
-      this.message = ''
+      if (this.message) {
+        this.sendMessage.push({user: 'me', data: this.message})
+        this.BotChat(this.message)
+        this.message = ''
+      } else {
+        alert("メッセージ未入力です。")
+      }
     },
     BotChat(msg) {
       this.sendMessage.push({user: 'other', data: msg + "!!"})
@@ -47,12 +68,101 @@ export default {
 .Content {
   grid-row: 1 / 2;
   grid-column: 2 / 3;
-  background: #8f8;
+  background-color: #fff;
+  overflow: auto;
+  .chat {
+    width: 100%;
+    height: 100%;
+    border: solid 1px #EEE;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    .messages {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      .message {
+        border-radius: 20px;
+        padding: 8px 15px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        display: inline-block;
+      }
+      .time {
+        font-size: 14px;
+        color: gray;
+      }
+    }
+    .other {
+      align-items: flex-start;
+      .message {
+        margin-right: 25%;
+        background-color: #eee;
+        position: relative;
+      }
+      .message.last::before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        left: -7px;
+        height: 20px;
+        width: 20px;
+        background: #eee;
+        border-bottom-right-radius: 15px;
+      }
+      .message.last::after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        left: -10px;
+        width: 10px;
+        height: 20px;
+        background: white;
+        border-bottom-right-radius: 10px;
+      }
+    }
+    .mine {
+      align-items: flex-end;
+      .message {
+        color: white;
+        margin-left: 25%;
+        background-color: #248bf5;
+        background-attachment: fixed;
+        position: relative;
+      }
+      .message.last:before {
+        content: "";
+        position: absolute;
+        z-index: 0;
+        bottom: 0;
+        right: -8px;
+        height: 20px;
+        width: 20px;
+        background-color: #248bf5;
+        background-attachment: fixed;
+        border-bottom-left-radius: 15px;
+      }
+      .message.last:after {
+        content: "";
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        right: -10px;
+        width: 10px;
+        height: 20px;
+        background: white;
+        border-bottom-left-radius: 10px;
+      }
+    }
+  }
 }
+
+
 .Form {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
-  background: #88f;
   display: table;
   width: 100%;
 }
