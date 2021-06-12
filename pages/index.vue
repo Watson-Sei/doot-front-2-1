@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <p>データ:</p>
-    <p>{{ sendMessage }}</p>
-    <input v-model="message"/>
-    <button @click="sendChat">送信</button>
+  <div class="container">
+    <div class="Side">Side</div>
+    <div class="Content">Content</div>
+    <div class="Form">Form</div>
   </div>
 </template>
 
@@ -29,26 +28,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.split{
-  display: table;
-  width: 100%;
+.container {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 1fr 100px;
+  grid-template-columns: 350px 1fr;
 }
-.split-item {
-  display: table-cell;
-  padding: 80px;
-  width: 50%;
+.Side {
+  grid-row: 1 / 3;
+  grid-column: 1 / 2;
+  background: #f88;
 }
-.split-left {
-  background: #000;
-  color: #fff;
-  position: relative;
+.Content {
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+  background: #8f8;
 }
-.split-left__inner {
-  height: 100%;
-  position: fixed;
-  width: 50%;
-}
-.split-right__inner {
-  height: 8000px;
+.Form {
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+  background: #88f;
 }
 </style>
