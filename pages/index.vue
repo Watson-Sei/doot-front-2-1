@@ -6,7 +6,7 @@
           <font-awesome-icon icon = "user-circle" class="avatar-svg"/>
         </div>
         <div>
-          <p>経営者A doot.inc</p>
+          <p class="user-name">経営者A doot.inc CEO</p>
           <span class="last-message">[画像]</span>
         </div>
       </div>
@@ -41,7 +41,7 @@
     </div>
     <div class="Form">
       <div class="form-content">
-        <input v-model="message" placeholder="ENTERキーで送信(上限800文字)" maxlength="800" />
+        <input v-model="message" placeholder="ENTERキーで送信(上限800文字)" maxlength="800" @keyup.enter="sendChat" />
         <button @click="sendChat">送信</button>
       </div>
     </div>
@@ -109,6 +109,12 @@ export default {
         width: 70%;
         height: 70%;
       }
+    }
+    .user-name {
+      width: 150px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     .last-message {
       font-size: 14px;
