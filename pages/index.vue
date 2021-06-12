@@ -1,6 +1,18 @@
 <template>
   <div class="container">
-    <div class="Side">Side</div>
+    <div class="Side">
+      <div class="collocutor active">
+        <div class="avatar">
+          <font-awesome-icon icon = "user-circle" class="avatar-svg"/>
+        </div>
+        <div>
+          <p>経営者A doot.inc</p>
+          <span class="last-message">[画像]</span>
+        </div>
+      </div>
+      <!-- 他のユーザーがいた場合 -->
+      <!-- <div class="collocutor"></div> -->
+    </div>
     <div class="Content">
       <div class="chat">
         <div v-for="(item, index) in sendMessage" :key="index">
@@ -72,11 +84,43 @@ export default {
   grid-template-rows: 1fr 100px;
   grid-template-columns: 300px 1fr;
 }
+
+// 話し相手のCSS
 .Side {
   grid-row: 1 / 3;
   grid-column: 1 / 2;
-  background: #f88;
+  background: #fff;
+  display: flex;
+  flex-flow: column;
+  border: 1px #ccc solid;
+  margin: 0 0 1em;
+  .collocutor {
+    background-color: #E6F1FD;
+    width: 100%;
+    height: 95px;
+    border: 1px #ccc solid;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    .avatar {
+      width: 40px;
+      height: 40px;
+      .avatar-svg {
+        width: 70%;
+        height: 70%;
+      }
+    }
+    .last-message {
+      font-size: 14px;
+      color: gray;
+    }
+  }
+  .active {
+    border-left: 5px solid blue;
+  }
 }
+
+// メッセージCSS
 .Content {
   grid-row: 1 / 2;
   grid-column: 2 / 3;
@@ -185,7 +229,7 @@ export default {
   }
 }
 
-
+// チャット入力とチャット送信CSS
 .Form {
   grid-row: 2 / 3;
   grid-column: 2 / 3;
